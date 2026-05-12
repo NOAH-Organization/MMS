@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node \"e:\\\\NOAH Organization\\\\NOAH MMS\\\\scripts\\\\extract-usecases.js\")"
+    ]
+  },
+  "mcpServers": {
+    "drawio": {
+      "command": "npx",
+      "args": ["-y", "@drawio/mcp"]
+    }
+  }
+}

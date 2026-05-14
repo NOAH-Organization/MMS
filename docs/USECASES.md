@@ -1,6 +1,6 @@
 # NOAH Manga Management System (NOAH MMS) — Use Case List
 
-**Last revised:** 08/05/2026 04:18 PM
+**Last revised:** 13/05/2026 12:00 PM
 
 ---
 
@@ -16,6 +16,7 @@
 - UC-01-08 Switch page display mode (single / double-spread / long-strip)
 - UC-01-09 Change page fit option (width / height / original)
 - UC-01-10 Place or clear a bookmark on a page
+- ~~UC-01-11~~ *(cancelled — gap in numbering is intentional; all subsequent IDs are preserved as-is)*
 - UC-01-12 Rate a manga title
 
 ---

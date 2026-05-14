@@ -141,7 +141,7 @@ Cross-referencing functional requirements against `USECASES.md` produced the fol
 
 | Requirement | Location | Resolution |
 | --- | --- | --- |
-| The AI assistant must acknowledge when it lacks sufficient information to answer a query, rather than generating speculative or fabricated responses. | §1.1.4 | **Resolved.** `UC-05-95` added to SS-05 in `USECASES.md`. Distinct from `UC-05-04` (out-of-scope refusal) — this covers in-scope queries the model cannot answer. |
+| The AI assistant must acknowledge when it lacks sufficient information to answer a query, rather than generating speculative or fabricated responses. | §1.1.4 | **Resolved.** `UC-05-05` added to SS-05 in `USECASES.md`. Distinct from `UC-05-04` (out-of-scope refusal) — this covers in-scope queries the model cannot answer. |
 | Personnel account self-registration was not stated as a requirement, yet `UC-02-01` existed in `USECASES.md` as an orphan use case. | §1.1.2 | **Resolved.** All accounts are administrator-provisioned (`UC-07-04`). Self-registration is not supported. `UC-02-01` has been removed from `USECASES.md`. |
 
 #### Open Recommendations — Duplicate Use Cases

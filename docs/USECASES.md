@@ -1,10 +1,12 @@
 # NOAH Manga Management System (NOAH MMS) — Use Case List
 
-**Last revised:** 13/05/2026 12:00 PM
+**Last revised:** 14/05/2026 12:00 PM
 
 ---
 
 ## SS-01: Manga Reading & Delivery
+
+> Note: Usecase number 11 is cancelled - gap in numbering is intentional; all subsequent IDs are preserved as-is
 
 - UC-01-01 Read a manga chapter in the in-browser reader
 - UC-01-02 Navigate chapters by volume, chapter number, and language
@@ -16,7 +18,6 @@
 - UC-01-08 Switch page display mode (single / double-spread / long-strip)
 - UC-01-09 Change page fit option (width / height / original)
 - UC-01-10 Place or clear a bookmark on a page
-- ~~UC-01-11~~ *(cancelled — gap in numbering is intentional; all subsequent IDs are preserved as-is)*
 - UC-01-12 Rate a manga title
 
 ---
@@ -85,6 +86,7 @@
 - UC-06-08 View the system-wide content dashboard
 - UC-06-09 Monitor per-title personnel engagement metrics
 - UC-06-10 Review and approve AI-generated tags before publishing a title
+- UC-06-11 Upload a chapter from the local file system (group member)
 
 ---
 
@@ -111,4 +113,4 @@
 
 ---
 
-**Total: 66 use cases across 8 subsystems.**
+**Total: 67 use cases across 8 subsystems.**

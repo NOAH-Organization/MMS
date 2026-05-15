@@ -1,6 +1,6 @@
 # NOAH Manga Management System (NOAH MMS) — System Requirements
 
-**Last revised:** 12/05/2026 09:36 AM
+**Last revised:** 14/05/2026 09:36 AM
 
 > **Revision note:** This document is the authoritative requirements specification for NOAH MMS. Items marked **[ADDED]** are enhancements proposed during review. Items marked **[REVISED]** replace or clarify the original wording — see the inline note for the rationale. Items marked **[DECISION REQUIRED]** indicate open questions that must be resolved before implementation of the relevant subsystem begins.
 
@@ -78,6 +78,19 @@ Personnel shall have access to the following features across four subsystems.
 
 ---
 
+#### 1.1.5 Translation Group Content Contribution
+
+Personnel who are registered members of a Translation Group may upload new chapters for existing series from the local file system (supported formats: ZIP/CBZ archives of image files or structured folder uploads). → `UC-06-11`
+
+The following constraints apply to group-member chapter uploads:
+
+- Each personnel account belongs to at most one Translation Group at a time. Personnel may leave their current group and join a different one at any time.
+- An uploader may only attribute an uploaded chapter to the Translation Group they currently belong to.
+- New series creation and volume management remain administrator-only operations (see §1.2.1).
+- Duplicate chapter detection applies in the same manner as administrator uploads. → `UC-06-03`
+
+---
+
 #### 1.1.4 AI Assistant
 
 - Query the AI assistant in natural language to search for manga titles, authors, and characters. → `UC-05-01`
@@ -98,7 +111,7 @@ Administrators shall have access to all personnel features described in Section 
 
 - Scrape manga content from external web sources via a provided URL. → `UC-06-01`
 - Automatically identify and select the appropriate scraping parser based on the source domain. → **[SYSTEM BEHAVIOR — no dedicated use case; covered implicitly within `UC-06-01`]**
-- Upload manga content from the local file system (supported formats: ZIP/CBZ archives of image files or structured folder uploads). → `UC-06-02`
+- Upload manga content (series, volumes, and chapters) from the local file system (supported formats: ZIP/CBZ archives of image files or structured folder uploads). Chapter-level uploads are also available to Translation Group members — see §1.1.5 for the applicable constraints. → `UC-06-02`
 - **[ADDED]** Detect and flag potential duplicate titles during scraping or upload, prompting administrator confirmation before proceeding. → `UC-06-03`
 - Delete stored manga titles. **[ADDED]** Deletion must require a two-step confirmation to prevent accidental data loss. → `UC-06-04`
 - **[ADDED]** Suspend (temporarily hide) a manga title from personnel view without permanently deleting it. → `UC-06-05`

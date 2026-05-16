@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(node \"e:\\\\NOAH Organization\\\\NOAH MMS\\\\scripts\\\\extract-usecases.js\")",
-      "mcp__claude_ai_Draw_io__create_diagram"
+      "mcp__claude_ai_Draw_io__create_diagram",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
     ]
   }
 }

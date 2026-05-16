@@ -1,0 +1,767 @@
+// NOAH Manga Management System (NOAH MMS) — Database Schema
+// Last revised: 14/05/2026
+//
+// Notes:
+//   - AuditLog and UserLog are OTEL-only and are NOT modeled here.
+//   - AI session/message state is persisted in a separate NoSQL store and is NOT modeled here.
+//   - All datetime fields follow DD-MM-YYYY hh:mm:ss or DD-MM-YYYY.
+//   - Every entity carries management metadata (created_at, updated_at, deleted_at, is_deleted)
+//     unless explicitly noted otherwise. Soft-delete is the only supported deletion mechanism.
+//   - Fields marked "auto-computed" are maintained by application logic / triggers.
+//   - Fields marked "ro" are immutable after record creation.
+
+// ============================================================
+// Enums
+// ============================================================
+
+Enum series_status {
+  upcoming
+  ongoing
+  finished
+  hiatus
+  cancelled
+}
+
+Enum series_type {
+  manga    [note: 'Japan']
+  manhua   [note: 'China']
+  manhwa   [note: 'Korea']
+  comic    [note: 'other']
+}
+
+Enum chapter_type {
+  oneshot
+  series
+  anthology
+}
+
+Enum content_rating {
+  everyone
+  teen
+  mature
+  explicit
+}
+
+Enum personnel_role {
+  personnel
+  administrator
+}
+
+Enum account_status {
+  active
+  suspended
+  deleted
+}
+
+Enum reading_stats_privacy {
+  public
+  friends_only
+}
+
+Enum tfa_method {
+  authenticator_app
+  sms
+}
+
+Enum token_type {
+  refresh
+  password_reset
+}
+
+Enum friend_request_status {
+  pending
+  accepted
+  rejected
+  blocked
+}
+
+Enum post_vote_direction {
+  upvote
+  downvote
+}
+
+Enum tag_proposal_status {
+  pending
+  approved
+  rejected
+}
+
+Enum tag_proposal_source {
+  manual
+  ai
+}
+
+Enum scrape_job_status {
+  pending
+  running
+  completed
+  failed
+  cancelled
+}
+
+Enum reading_direction {
+  rtl
+  ltr
+}
+
+Enum page_display_mode {
+  single
+  double_spread
+  long_strip
+}
+
+Enum page_fit {
+  fit_width
+  fit_height
+  original
+}
+
+Enum creator_role {
+  author  [note: 'writing']
+  artist  [note: 'illustration']
+}
+
+Enum character_role {
+  protagonist
+  antagonist
+  supporting
+  other
+}
+
+Enum notification_type {
+  friend_request
+  post_reply
+  direct_message
+  new_chapter
+}
+
+// ============================================================
+// Strong Entities
+// ============================================================
+
+Table series {
+  // Identification
+  id              uuid        [pk, not null, note: 'ro']
+  original_title  varchar     [not null, note: 'ro — native-script title (e.g. ドラえもん for Japanese)']
+  english_title   varchar     [not null]
+  vietnamese_title varchar
+  alt_titles      text[]      [note: 'aliases, abbreviations, alternate names']
+
+  // Content Info
+  description       text
+  cover_image       varchar    [note: 'URL']
+  background_image  varchar    [note: 'URL']
+  highest_chapter   float      [note: 'auto-computed — highest chapter number currently in the system']
+  highest_volume    int        [note: 'auto-computed — highest volume number currently in the system']
+
+  // Publication Info
+  status          series_status   [not null, default: 'upcoming']
+  latest_chapter  float           [note: 'latest officially released chapter number']
+  latest_volume   int             [note: 'latest officially released volume number']
+  start_year      int
+  end_year        int
+  country         varchar
+  platforms       text[]          [note: 'platforms the series is available on']
+  series_type     series_type     [not null, default: 'manga']
+  chapter_type    chapter_type    [not null, default: 'series']
+  content_rating  content_rating  [not null, default: 'everyone']
+
+  // Moderation
+  is_suspended  boolean  [not null, default: false, note: 'administrator-imposed visibility override; hides from all personnel without deletion']
+
+  // User Stats (auto-computed)
+  avg_rating      float  [note: 'auto-computed — average of series_user_record.rating where rating IS NOT NULL']
+  total_ratings   int    [not null, default: 0, note: 'auto-computed — count of non-null ratings in series_user_record']
+  total_reads     int    [not null, default: 0, note: 'auto-computed — distinct user count in series_user_record']
+  total_comments  int    [not null, default: 0, note: 'auto-computed from comment where manga_id matches']
+  total_bookmarks int    [not null, default: 0, note: 'auto-computed — count of series_user_record rows where is_bookmarked = true']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Main archived entity. Can be suspended by an administrator without permanent deletion.'
+}
+
+Table tags {
+  // Identification
+  id    uuid     [pk, not null]
+  name  varchar  [not null, note: 'e.g. Slice of Life, Romance, Shounen']
+
+  // Content Info
+  description  text
+  group        varchar  [note: 'category the tag belongs to: theme, character type, narrative style, genre, demographic']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Tags for series categorization and advanced search. Tag suggestions are generated by VLM and require admin approval.'
+}
+
+Table creator {
+  // Identification
+  id          uuid    [pk, not null]
+  pen_name    varchar [not null, note: 'primary public display name / pseudonym']
+  native_name varchar [note: 'name in native language/script']
+  alt_names   text[]  [note: 'other aliases']
+
+  // Personal Info
+  bio         text
+  birth_date  date
+  death_date  date
+  nationality varchar
+  gender      varchar
+  social_links jsonb  [note: 'key-value map: platform → URL (X/Twitter, Pixiv, Facebook, etc.)']
+
+  // Work Info
+  total_works_official  int     [note: 'official count — may differ from system count']
+  total_works_in_system int     [not null, default: 0, note: 'auto-computed from series_creator_credit']
+  is_author             boolean [not null, default: false]
+  is_artist             boolean [not null, default: false]
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Author or artist. A person may hold both roles. At least one role required.'
+}
+
+Table translation_group {
+  // Identification
+  id        uuid    [pk, not null]
+  name      varchar [not null]
+  alt_names text[]  [note: 'alternate names or abbreviations']
+
+  // Info
+  description          text
+  website_url          varchar [note: 'URL']
+  languages            text[]  [note: 'list of languages this group works in']
+  is_official_publisher boolean [not null, default: false, note: 'marks an official publisher (e.g. Viz Media, Yen Press)']
+
+  // Stats (auto-computed)
+  total_chapters_translated int [not null, default: 0, note: 'auto-computed — count of chapters attributed to this group']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Group of translators. Official publishers are modeled as groups with is_official_publisher = true. A personnel member belongs to at most one group at a time.'
+}
+
+Table personnel {
+  // Identification
+  id       uuid    [pk, not null, note: 'ro']
+  username varchar [unique, not null, note: 'ro — used for login only, not the display name']
+  email    varchar [unique, not null, note: 'ro — used for login and password reset']
+
+  // Account Info
+  display_name          varchar                [note: 'shown on profile; defaults to username']
+  password_hash         varchar                [not null, note: 'ro — bcrypt (min cost 12) or Argon2id; write-only, never exposed via API']
+  avatar_url            varchar                [note: 'URL']
+  bio                   text
+  role                  personnel_role         [not null, default: 'personnel']
+  account_status        account_status         [not null, default: 'active']
+  reading_stats_privacy reading_stats_privacy  [not null, default: 'public']
+  last_active_at        timestamp              [note: 'updated on every successful login and authenticated request']
+  group_id              uuid                   [ref: > translation_group.id, note: 'nullable — current translation group; null if not a member of any group']
+
+  // Security
+  is_2fa_enabled        boolean    [not null, default: false]
+  tfa_method            tfa_method [note: 'original field: 2fa_method — null if 2FA is disabled']
+  phone_number          varchar    [note: 'stored encrypted; required when tfa_method = sms; null otherwise; never exposed via API']
+  tfa_secret            varchar    [note: 'original field: 2fa_secret — stored encrypted; null if 2FA disabled; never exposed via API']
+  failed_login_attempts int        [not null, default: 0, note: 'reset on successful login']
+  locked_until          timestamp  [note: 'null if not locked; auto-set after exceeding failed-attempt threshold']
+
+  // Activity Stats (auto-computed)
+  total_titles_read   int [not null, default: 0, note: 'auto-computed from reading_progress']
+  total_chapters_read int [not null, default: 0, note: 'auto-computed from reading_progress']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'User or administrator account. All accounts are administrator-provisioned; self-registration is not supported.'
+}
+
+Table post {
+  // Identification
+  id  uuid  [pk, not null, note: 'ro']
+
+  // Content
+  body               text    [not null]
+  embedded_reference jsonb   [note: '{ type, id, page_number? } — type: manga | chapter | page']
+  is_repost          boolean [not null, default: false]
+  original_post_id   uuid    [ref: > post.id, note: 'ro — null if not a repost']
+
+  // Stats (auto-computed)
+  upvote_count   int [not null, default: 0, note: 'auto-computed from post_vote']
+  downvote_count int [not null, default: 0, note: 'auto-computed from post_vote']
+  comment_count  int [not null, default: 0, note: 'auto-computed from comment']
+  repost_count   int [not null, default: 0, note: 'auto-computed — count of reposts referencing this post']
+
+  // FK
+  author_id uuid [not null, ref: > personnel.id]
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'User-generated post on the activity feed. A repost points to an existing post; body acts as optional commentary.'
+}
+
+Table scrape_job {
+  // Identification
+  id  uuid  [pk, not null, note: 'ro']
+
+  // Configuration
+  source_url      varchar [not null, note: 'ro']
+  target_manga_id uuid    [ref: > series.id, note: 'ro — null for new-title ingestion; non-null when updating an existing series']
+  is_recurring    boolean [not null, default: false]
+  schedule        varchar [note: 'cron expression — null if is_recurring = false']
+
+  // Execution
+  started_at      timestamp
+  completed_at    timestamp
+  status          scrape_job_status [not null, default: 'pending']
+  result_summary  jsonb             [note: '{ chapters_added, pages_added, errors }']
+  error_details   jsonb             [note: 'null if no errors']
+
+  // FK
+  created_by uuid [not null, ref: > personnel.id, note: 'admin-only']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Content ingestion job triggered by an administrator. Can be one-off or recurring. Job history is retained.'
+}
+
+// ============================================================
+// Weak Entities
+// ============================================================
+
+Table volume {
+  // Identification
+  id            uuid [pk, not null, note: 'ro']
+  volume_number int  [not null, note: 'ro']
+  title         varchar [note: 'optional volume title']
+
+  // Publication Info
+  release_date           date
+  publisher              varchar [default: 'unknown']
+  isbn                   varchar [note: 'International Standard Book Number']
+  edition                varchar [default: 'standard', note: 'e.g. anniversary, collab, standard']
+  published_chapter_start float  [note: 'first chapter number in the official release']
+  published_chapter_end   float  [note: 'last chapter number in the official release']
+  store_links            jsonb   [note: 'key-value map: store → URL']
+  price                  jsonb   [note: 'key-value map: currency → price']
+
+  // Content Info
+  description          text
+  cover_image          varchar  [note: 'front cover URL']
+  current_chapter_start float   [note: 'first chapter currently in the system for this volume']
+  current_chapter_end   float   [note: 'last chapter currently in the system for this volume']
+  total_pages          int      [not null, default: 0, note: 'total page count currently in the system']
+
+  // User Stats (auto-computed)
+  avg_rating      float [note: 'auto-computed — average rating across all chapters in this volume']
+  total_ratings   int   [not null, default: 0, note: 'auto-computed — count of ratings across all chapters']
+  total_reads     int   [not null, default: 0, note: 'auto-computed — distinct user count across all chapters']
+  total_comments  int   [not null, default: 0, note: 'auto-computed from comment rows where chapter_id matches any chapter in this volume']
+  total_bookmarks int   [not null, default: 0, note: 'auto-computed from page_bookmark records across all chapters']
+
+  // FK
+  series_id             uuid    [not null, ref: > series.id]
+  series_original_title varchar [not null, note: 'ro — denormalized from series.original_title to avoid joins at display time']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Volume belonging to a series. Volume 0 is the default catch-all for chapters with no assigned volume.'
+}
+
+Table chapter {
+  // Identification
+  id             uuid  [pk, not null, note: 'ro']
+  chapter_number float [not null, note: 'ro']
+  title          varchar [note: 'optional chapter title']
+
+  // Publication Info
+  release_date date
+  language     varchar [not null, default: 'none', note: 'source or translated language; default "none" for wordless chapters']
+  is_official  boolean [not null, default: false, note: 'whether this is an official translation']
+
+  // Content Info
+  description text
+  page_count  int     [not null, note: 'always a positive integer; every chapter must have at least one page']
+  is_special  boolean [not null, default: false, note: 'marks anniversary or special end-of-volume chapters']
+  pages       jsonb   [not null, note: 'array of page objects: [{ order, url, dimensions }]']
+
+  // User Stats (auto-computed)
+  avg_rating      float [note: 'auto-computed from chapter_rating']
+  total_ratings   int   [not null, default: 0, note: 'auto-computed from chapter_rating']
+  total_reads     int   [not null, default: 0, note: 'auto-computed — distinct user count in reading_progress']
+  total_comments  int   [not null, default: 0, note: 'auto-computed from comment where chapter_id matches']
+  total_bookmarks int   [not null, default: 0, note: 'auto-computed from page_bookmark for this chapter']
+
+  // FK
+  series_id             uuid    [not null, ref: > series.id]
+  series_original_title varchar [not null, note: 'ro — denormalized from series.original_title']
+  volume_id             uuid    [not null, ref: > volume.id]
+  volume_number         int     [not null, note: 'ro — denormalized from volume.volume_number']
+  group_id              uuid    [not null, ref: > translation_group.id, note: 'for official releases the publisher is the group']
+  uploader_id           uuid    [not null, ref: > personnel.id, note: 'non-admin uploaders must have personnel.group_id = chapter.group_id']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Chapter belonging to exactly one series and one volume. Multiple translations of the same chapter_number may coexist.'
+}
+
+Table character {
+  // Identification
+  id      uuid    [pk, not null, note: 'ro']
+  name    varchar [not null, note: 'primary display name']
+  aliases text[]  [note: 'alternate names or nicknames']
+
+  // Description
+  role        character_role
+  description text
+  image_url   varchar [note: 'URL']
+
+  // FK
+  series_id             uuid    [not null, ref: > series.id]
+  series_original_title varchar [not null, note: 'ro — denormalized from series.original_title']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Named character scoped to exactly one series. Viewable by all personnel.'
+}
+
+Table user_preference {
+  // Identification — PK is the FK to personnel (one-to-one)
+  user_id uuid [pk, ref: - personnel.id, not null, note: 'ro — one-to-one with personnel; created with defaults at account provisioning']
+
+  // Reading Settings
+  reading_direction  reading_direction  [not null, default: 'rtl']
+  page_display_mode  page_display_mode  [not null, default: 'single']
+  page_fit           page_fit           [not null, default: 'fit_width']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+
+  Note: 'Per-user reading and display settings. Exactly one record per user. Persists across sessions and devices.'
+}
+
+Table token {
+  // Identification
+  id      uuid       [pk, not null, note: 'ro']
+  user_id uuid       [not null, ref: > personnel.id, note: 'ro']
+  type    token_type [not null, note: 'ro']
+
+  // Content
+  token_hash varchar [not null, note: 'ro — hash of the plaintext token; plaintext is never stored']
+
+  // Lifecycle
+  issued_at  timestamp [not null, note: 'ro — set by the system on insert']
+  expires_at timestamp [not null]
+  revoked_at timestamp [note: 'null if still valid; set on use (password_reset), rotation (refresh), or explicit revocation']
+
+  Note: 'Auth token for refresh and password_reset lifecycles. Stored as hash only. No soft-delete — invalidated via revoked_at.'
+}
+
+Table friend_request {
+  // Identification
+  id           uuid   [pk, not null, note: 'ro']
+  requester_id uuid   [not null, ref: > personnel.id, note: 'ro — the user who initiated the request']
+  addressee_id uuid   [not null, ref: > personnel.id, note: 'ro — the user who received the request']
+
+  // State
+  status       friend_request_status [not null, default: 'pending']
+  requested_at timestamp             [not null, note: 'ro']
+  responded_at timestamp             [note: 'null until the addressee acts']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  indexes {
+    (requester_id, addressee_id) [unique, note: 'at most one active request per ordered pair']
+  }
+
+  Note: 'Directed friendship request. blocked status prevents further contact. rejected allows re-submission after a cooldown.'
+}
+
+Table comment {
+  // Identification
+  id  uuid  [pk, not null, note: 'ro']
+
+  // Content
+  body              text [not null]
+  parent_comment_id uuid [ref: > comment.id, note: 'null for top-level comments; threading limited to one level; must reference a comment with the same parent entity']
+
+  // Polymorphic Target — exactly one must be non-null
+  manga_id   uuid [ref: > series.id,  note: 'null if not targeting a series']
+  chapter_id uuid [ref: > chapter.id, note: 'null if not targeting a chapter']
+  post_id    uuid [ref: > post.id,    note: 'null if not targeting a post']
+
+  // FK
+  author_id uuid [not null, ref: > personnel.id]
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'Polymorphic comment. Exactly one of manga_id, chapter_id, post_id is non-null per row.'
+}
+
+Table conversation {
+  // Identification
+  id  uuid  [pk, not null, note: 'ro']
+
+  // State
+  last_message_at timestamp [note: 'auto-updated atomically on each message insert']
+
+  // FK — symmetric, two participants
+  participant_a_id uuid [not null, ref: > personnel.id]
+  participant_b_id uuid [not null, ref: > personnel.id]
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  indexes {
+    (participant_a_id, participant_b_id) [unique, note: 'at most one channel per unordered pair']
+  }
+
+  Note: 'DM channel between exactly two users. Requires confirmed friendship or one participant being an administrator.'
+}
+
+Table message {
+  // Identification
+  id  uuid  [pk, not null, note: 'ro']
+
+  // Content
+  body text [not null, note: 'text-only in the initial release']
+
+  // State
+  is_read boolean   [not null, default: false]
+  sent_at timestamp [not null, note: 'ro — set by the system on insert; equivalent to created_at']
+
+  // FK
+  conversation_id uuid [not null, ref: > conversation.id]
+  sender_id       uuid [not null, ref: > personnel.id]
+
+  Note: 'Individual message within a conversation. Immutable once written.'
+}
+
+Table notification {
+  // Identification
+  id  uuid  [pk, not null, note: 'ro']
+
+  // Content
+  type      notification_type [not null]
+  is_read   boolean           [not null, default: false]
+  reference jsonb             [note: 'e.g. { type: "chapter", id: "...", series_title: "..." } — enables deep-linking without a separate query']
+
+  // FK
+  recipient_id uuid [not null, ref: > personnel.id]
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+  deleted_at  timestamp
+  is_deleted  boolean    [not null, default: false]
+
+  Note: 'In-app notification delivered to a user.'
+}
+
+Table reading_progress {
+  // Composite PK
+  user_id    uuid [not null, ref: > personnel.id, note: 'ro']
+  chapter_id uuid [not null, ref: > chapter.id,   note: 'ro']
+
+  // State
+  last_page    int       [not null, note: 'the most recent page the user viewed']
+  is_completed boolean   [not null, default: false, note: 'false → true only; never reset; set when user reaches the last page']
+  last_read_at timestamp [note: 'updated on every read event']
+
+  indexes {
+    (user_id, chapter_id) [pk]
+  }
+
+  Note: 'Per-user per-chapter reading state. Created on first page view; never deleted.'
+}
+
+Table page_bookmark {
+  // Identification
+  id          uuid [pk, not null, note: 'ro']
+  user_id     uuid [not null, ref: > personnel.id, note: 'ro']
+  chapter_id  uuid [not null, ref: > chapter.id,   note: 'ro']
+  page_number int  [not null, note: 'ro — the specific page that was bookmarked']
+
+  // Content
+  note          text
+  bookmarked_at timestamp [not null, note: 'ro — set by the system on insert']
+
+  indexes {
+    (user_id, chapter_id, page_number) [unique, note: 'placing a bookmark on the same page replaces the note']
+  }
+
+  Note: 'User-placed bookmark on a specific page within a chapter. Distinct from the series-level is_bookmarked flag. No soft-delete.'
+}
+
+// ============================================================
+// Associated Entities (Junction Tables)
+// ============================================================
+
+Table series_creator_credit {
+  series_id  uuid         [not null, ref: > series.id,  note: 'ro — composite PK with creator_id and role']
+  creator_id uuid         [not null, ref: > creator.id, note: 'ro']
+  role       creator_role [not null, note: 'ro — role is part of PK so one person may hold both roles on the same series']
+
+  indexes {
+    (series_id, creator_id, role) [pk]
+  }
+
+  Note: 'Links a series to a creator with a discriminating role. A series must have at least one author credit.'
+}
+
+Table series_user_record {
+  // Composite PK
+  user_id   uuid [not null, ref: > personnel.id, note: 'ro']
+  series_id uuid [not null, ref: > series.id,    note: 'ro']
+
+  // State
+  is_bookmarked          boolean [not null, default: false]
+  notify_on_new_chapter  boolean [not null, default: false, note: 'may only be true while is_bookmarked = true; clearing is_bookmarked auto-clears this flag']
+  rating                 float   [note: 'nullable; updated in place; feeds series.avg_rating and series.total_ratings']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+
+  indexes {
+    (user_id, series_id) [pk]
+  }
+
+  Note: 'Full user–series relationship. Created on first chapter read; never deleted.'
+}
+
+Table chapter_rating {
+  // Composite PK
+  user_id    uuid [not null, ref: > personnel.id, note: 'ro']
+  chapter_id uuid [not null, ref: > chapter.id,   note: 'ro']
+
+  // Content
+  rating float [not null, note: 'typically 1.0–5.0; updates replace in place; feeds chapter.avg_rating and chapter.total_ratings']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+
+  indexes {
+    (user_id, chapter_id) [pk]
+  }
+
+  Note: 'User rating for a specific chapter. One row per (user_id, chapter_id) pair.'
+}
+
+Table post_vote {
+  // Composite PK
+  user_id uuid [not null, ref: > personnel.id, note: 'ro']
+  post_id uuid [not null, ref: > post.id,       note: 'ro']
+
+  // Content
+  direction post_vote_direction [not null, note: 'changing direction updates in place; feeds post.upvote_count and post.downvote_count']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+
+  indexes {
+    (user_id, post_id) [pk]
+  }
+
+  Note: 'Binary vote on a post. At most one per user per post. Direction change updates in place.'
+}
+
+Table creator_follow {
+  // Composite PK
+  user_id    uuid [not null, ref: > personnel.id, note: 'ro']
+  creator_id uuid [not null, ref: > creator.id,   note: 'ro']
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+
+  indexes {
+    (user_id, creator_id) [pk]
+  }
+
+  Note: 'User following a creator. Pure junction — presence of a row implies following.'
+}
+
+Table tag_proposal {
+  // Composite PK
+  series_id uuid [not null, ref: > series.id, note: 'ro']
+  tag_id    uuid [not null, ref: > tags.id,   note: 'ro']
+
+  // State
+  status tag_proposal_status [not null, default: 'pending', note: 'tag is active on the series when status = approved']
+  source tag_proposal_source [not null]
+
+  // Management Metadata
+  created_at  timestamp  [not null]
+  updated_at  timestamp  [not null]
+
+  indexes {
+    (series_id, tag_id) [pk]
+  }
+
+  Note: 'Links a series to a tag and tracks proposal lifecycle. Required for the AI-tag review gate before publication.'
+}
+
+Table character_appearance {
+  // Composite PK
+  chapter_id   uuid [not null, ref: > chapter.id,   note: 'ro']
+  character_id uuid [not null, ref: > character.id, note: 'ro']
+
+  indexes {
+    (chapter_id, character_id) [pk]
+  }
+
+  Note: 'Records that a character appears in a specific chapter. Pure junction — no additional attributes.'
+}

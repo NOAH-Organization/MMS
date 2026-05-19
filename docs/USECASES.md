@@ -1,6 +1,6 @@
 # NOAH Manga Management System (NOAH MMS) — Use Case List
 
-**Last revised:** 14/05/2026 12:00 PM
+**Last revised:** 16/05/2026 12:00 PM
 
 ---
 
@@ -87,6 +87,7 @@
 - UC-06-09 Monitor per-title personnel engagement metrics
 - UC-06-10 Review and approve AI-generated tags before publishing a title
 - UC-06-11 Upload a chapter from the local file system (group member)
+- UC-06-12 Edit series metadata (original title, translated titles, description, publication information, and cover images)
 
 ---
 
@@ -113,4 +114,4 @@
 
 ---
 
-**Total: 67 use cases across 8 subsystems.**
+**Total: 68 use cases across 8 subsystems.**

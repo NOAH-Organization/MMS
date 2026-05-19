@@ -102,6 +102,7 @@
 - Follow Next.js folder/file naming conventions
 - Keep project files outside the app directotry, only keep routing files (page, layout, loading, not-found, ...) inside it (purely for routing purposes).
 - Prefer Next.js `<Link>` component instead of HTML default `<a>`
+- Cookies should be set on the server to prevent client-side tampering, using Next.js `cookies` API
 
 ### NestJS
 

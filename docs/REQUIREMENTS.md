@@ -1,6 +1,6 @@
 # NOAH Manga Management System (NOAH MMS) — System Requirements
 
-**Last revised:** 14/05/2026 09:36 AM
+**Last revised:** 16/05/2026 09:36 AM
 
 > **Revision note:** This document is the authoritative requirements specification for NOAH MMS. Items marked **[ADDED]** are enhancements proposed during review. Items marked **[REVISED]** replace or clarify the original wording — see the inline note for the rationale. Items marked **[DECISION REQUIRED]** indicate open questions that must be resolved before implementation of the relevant subsystem begins.
 
@@ -112,6 +112,7 @@ Administrators shall have access to all personnel features described in Section 
 - Scrape manga content from external web sources via a provided URL. → `UC-06-01`
 - Automatically identify and select the appropriate scraping parser based on the source domain. → **[SYSTEM BEHAVIOR — no dedicated use case; covered implicitly within `UC-06-01`]**
 - Upload manga content (series, volumes, and chapters) from the local file system (supported formats: ZIP/CBZ archives of image files or structured folder uploads). Chapter-level uploads are also available to Translation Group members — see §1.1.5 for the applicable constraints. → `UC-06-02`
+- **[ADDED]** Edit stored manga title metadata — including original and translated titles, description, publication information, and cover images. Changes to the original title cascade to denormalized copies on child chapter records and are recorded in the audit log. → `UC-06-12`
 - **[ADDED]** Detect and flag potential duplicate titles during scraping or upload, prompting administrator confirmation before proceeding. → `UC-06-03`
 - Delete stored manga titles. **[ADDED]** Deletion must require a two-step confirmation to prevent accidental data loss. → `UC-06-04`
 - **[ADDED]** Suspend (temporarily hide) a manga title from personnel view without permanently deleting it. → `UC-06-05`

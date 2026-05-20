@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="1200" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== STRONG ENTITIES (blue) ==================== -->
+
+    <!-- Tags (50,30,240,66) 2 attrs -->
+    <mxCell id="2" value="Tags" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="50" y="30" width="240" height="66" as="geometry" />
+    </mxCell>
+    <mxCell id="100" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="2">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="101" value="name : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="2">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Series (310,30,240,126) 5 attrs -->
+    <mxCell id="3" value="Series" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="310" y="30" width="240" height="126" as="geometry" />
+    </mxCell>
+    <mxCell id="102" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="3">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="103" value="original_title : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="3">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="104" value="english_title : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="3">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="105" value="status : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="3">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="106" value="is_suspended : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="3">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Creator (570,30,240,106) 4 attrs -->
+    <mxCell id="4" value="Creator" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="570" y="30" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="107" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="4">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="108" value="pen_name : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="4">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="109" value="is_author : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="4">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="110" value="is_artist : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="4">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- TranslationGroup (830,30,240,86) 3 attrs -->
+    <mxCell id="5" value="TranslationGroup" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="830" y="30" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="111" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="5">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="112" value="name : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="5">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="113" value="is_official_publisher : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="5">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== WEAK ENTITIES (green) ==================== -->
+
+    <!-- Volume (50,186,240,86) 3 attrs -->
+    <mxCell id="6" value="Volume" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="50" y="186" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="114" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="6">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="115" value="FK  series_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="6">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="116" value="volume_number : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="6">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Chapter (310,186,240,166) 7 attrs -->
+    <mxCell id="7" value="Chapter" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="310" y="186" width="240" height="166" as="geometry" />
+    </mxCell>
+    <mxCell id="117" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="118" value="FK  series_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="119" value="FK  volume_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="120" value="FK  group_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="121" value="FK  uploader_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="122" value="chapter_number : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="126" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="123" value="language : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="7">
+      <mxGeometry y="146" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Character (570,186,240,86) 3 attrs -->
+    <mxCell id="8" value="Character" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="570" y="186" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="124" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="8">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="125" value="FK  series_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="8">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="126" value="name : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="8">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Post (830,186,240,106) 4 attrs -->
+    <mxCell id="9" value="Post" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="830" y="186" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="127" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="9">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="128" value="FK  author_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="9">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="129" value="is_repost : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="9">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="130" value="FK?  original_post_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="9">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ScrapeJob (1090,186,240,106) 4 attrs -->
+    <mxCell id="10" value="ScrapeJob" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="1090" y="186" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="131" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="10">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="132" value="FK  created_by : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="10">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="133" value="FK?  target_manga_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="10">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="134" value="status : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="10">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Personnel (50,382,240,146) 6 attrs -->
+    <mxCell id="11" value="Personnel" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="50" y="382" width="240" height="146" as="geometry" />
+    </mxCell>
+    <mxCell id="135" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="11">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="136" value="username : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="11">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="137" value="email : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="11">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="138" value="role : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="11">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="139" value="account_status : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="11">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="140" value="FK?  group_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="11">
+      <mxGeometry y="126" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- UserPreference (310,382,240,46) 1 attr — yellow (junction/weak) -->
+    <mxCell id="12" value="UserPreference" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="310" y="382" width="240" height="46" as="geometry" />
+    </mxCell>
+    <mxCell id="141" value="PK+FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="12">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Token (570,382,240,126) 5 attrs -->
+    <mxCell id="13" value="Token" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="570" y="382" width="240" height="126" as="geometry" />
+    </mxCell>
+    <mxCell id="142" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="13">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="143" value="FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="13">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="144" value="type : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="13">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="145" value="expires_at : datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="13">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="146" value="revoked_at? : datetime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="13">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Notification (830,382,240,106) 4 attrs -->
+    <mxCell id="14" value="Notification" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="830" y="382" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="147" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="14">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="148" value="FK  recipient_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="14">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="149" value="type : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="14">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="150" value="is_read : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="14">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Message (1090,382,240,86) 3 attrs -->
+    <mxCell id="15" value="Message" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="1090" y="382" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="151" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="15">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="152" value="FK  conversation_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="15">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="153" value="FK  sender_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="15">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Comment (50,558,240,146) 6 attrs -->
+    <mxCell id="16" value="Comment" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="50" y="558" width="240" height="146" as="geometry" />
+    </mxCell>
+    <mxCell id="154" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="16">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="155" value="FK  author_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="16">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="156" value="FK?  manga_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="16">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="157" value="FK?  chapter_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="16">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="158" value="FK?  post_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="16">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="159" value="FK?  parent_comment_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="16">
+      <mxGeometry y="126" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- AuditLog (310,558,240,126) 5 attrs — OTEL red dashed -->
+    <mxCell id="17" value="AuditLog (OTEL)" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;" vertex="1" parent="1">
+      <mxGeometry x="310" y="558" width="240" height="126" as="geometry" />
+    </mxCell>
+    <mxCell id="160" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="17">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="161" value="FK  actor_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="17">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="162" value="action_type : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="17">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="163" value="affected_entity_type : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="17">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="164" value="affected_entity_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="17">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- UserLog (570,558,240,86) 3 attrs — OTEL red dashed -->
+    <mxCell id="18" value="UserLog (OTEL)" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;" vertex="1" parent="1">
+      <mxGeometry x="570" y="558" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="165" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="18">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="166" value="FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="18">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="167" value="action_type : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="18">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== JUNCTION / ASSOCIATED ENTITIES (yellow) ==================== -->
+
+    <!-- SeriesCreatorCredit (50,734,240,86) 3 attrs -->
+    <mxCell id="19" value="SeriesCreatorCredit" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="50" y="734" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="168" value="PK+FK  series_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="19">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="169" value="PK+FK  creator_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="19">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="170" value="role : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="19">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- TagProposal (310,734,240,106) 4 attrs -->
+    <mxCell id="20" value="TagProposal" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="310" y="734" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="171" value="PK+FK  series_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="20">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="172" value="PK+FK  tag_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="20">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="173" value="status : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="20">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="174" value="source : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="20">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- CharacterAppearance (570,734,240,66) 2 attrs -->
+    <mxCell id="21" value="CharacterAppearance" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="570" y="734" width="240" height="66" as="geometry" />
+    </mxCell>
+    <mxCell id="175" value="PK+FK  chapter_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="21">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="176" value="PK+FK  character_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="21">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- SeriesUserRecord (830,734,240,126) 5 attrs -->
+    <mxCell id="22" value="SeriesUserRecord" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="830" y="734" width="240" height="126" as="geometry" />
+    </mxCell>
+    <mxCell id="177" value="PK+FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="22">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="178" value="PK+FK  series_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="22">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="179" value="is_bookmarked : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="22">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="180" value="notify_on_new_chapter : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="22">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="181" value="rating? : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="22">
+      <mxGeometry y="106" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ChapterRating (50,890,240,86) 3 attrs -->
+    <mxCell id="23" value="ChapterRating" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="50" y="890" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="182" value="PK+FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="23">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="183" value="PK+FK  chapter_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="23">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="184" value="rating : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="23">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ReadingProgress (310,890,240,106) 4 attrs -->
+    <mxCell id="24" value="ReadingProgress" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="310" y="890" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="185" value="PK+FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="24">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="186" value="PK+FK  chapter_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="24">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="187" value="last_page : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="24">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="188" value="is_completed : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="24">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- PageBookmark (570,890,240,106) 4 attrs -->
+    <mxCell id="25" value="PageBookmark" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="570" y="890" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="189" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="25">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="190" value="FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="25">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="191" value="FK  chapter_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="25">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="192" value="page_number : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="25">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- CreatorFollow (830,890,240,66) 2 attrs -->
+    <mxCell id="26" value="CreatorFollow" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="830" y="890" width="240" height="66" as="geometry" />
+    </mxCell>
+    <mxCell id="193" value="PK+FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="26">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="194" value="PK+FK  creator_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="26">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- PostVote (1090,890,240,86) 3 attrs -->
+    <mxCell id="27" value="PostVote" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="1090" y="890" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="195" value="PK+FK  user_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="27">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="196" value="PK+FK  post_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="27">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="197" value="direction : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="27">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== SOCIAL ENTITIES (blue) ==================== -->
+
+    <!-- FriendRequest (50,1026,240,106) 4 attrs -->
+    <mxCell id="28" value="FriendRequest" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="50" y="1026" width="240" height="106" as="geometry" />
+    </mxCell>
+    <mxCell id="198" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="28">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="199" value="FK  requester_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="28">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="200" value="FK  addressee_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="28">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="201" value="status : enum" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="28">
+      <mxGeometry y="86" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Conversation (310,1026,240,86) 3 attrs -->
+    <mxCell id="29" value="Conversation" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="310" y="1026" width="240" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="202" value="PK  id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="29">
+      <mxGeometry y="26" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="203" value="FK  participant_a_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="29">
+      <mxGeometry y="46" width="240" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="204" value="FK  participant_b_id : uuid" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontSize=11;" vertex="1" parent="29">
+      <mxGeometry y="66" width="240" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== RELATIONSHIPS ==================== -->
+    <!-- Style key:
+         1:N  startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;
+         1:1  startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;html=1;
+         N:01 startArrow=ERmany;startFill=0;endArrow=ERzeroToOne;endFill=0;html=1;
+    -->
+
+    <!-- Series → Volume  1:N -->
+    <mxCell id="300" value="has" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="6" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Series → Chapter  1:N -->
+    <mxCell id="301" value="contains" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="7" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Series → Character  1:N -->
+    <mxCell id="302" value="has" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="8" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Series → SeriesCreatorCredit  1:N -->
+    <mxCell id="303" value="linked via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="19" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Series → TagProposal  1:N -->
+    <mxCell id="304" value="tagged via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="20" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Series → SeriesUserRecord  1:N -->
+    <mxCell id="305" value="tracked via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="22" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Series → Comment  1:N -->
+    <mxCell id="306" value="receives" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="3" target="16" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Tags → TagProposal  1:N -->
+    <mxCell id="307" value="in" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="2" target="20" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Creator → SeriesCreatorCredit  1:N -->
+    <mxCell id="308" value="linked via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="4" target="19" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Creator → CreatorFollow  1:N -->
+    <mxCell id="309" value="followed via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="4" target="26" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- TranslationGroup → Chapter  1:N -->
+    <mxCell id="310" value="translates" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="5" target="7" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- TranslationGroup → Personnel  1:N -->
+    <mxCell id="311" value="has" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="5" target="11" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Volume → Chapter  1:N -->
+    <mxCell id="312" value="contains" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="6" target="7" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Chapter → CharacterAppearance  1:N -->
+    <mxCell id="313" value="in" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="7" target="21" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Chapter → ChapterRating  1:N -->
+    <mxCell id="314" value="rated via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="7" target="23" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Chapter → ReadingProgress  1:N -->
+    <mxCell id="315" value="tracked via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="7" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Chapter → PageBookmark  1:N -->
+    <mxCell id="316" value="bookmarked via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="7" target="25" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Chapter → Comment  1:N -->
+    <mxCell id="317" value="receives" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="7" target="16" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Character → CharacterAppearance  1:N -->
+    <mxCell id="318" value="appears via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="8" target="21" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Chapter  1:N -->
+    <mxCell id="319" value="uploads" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="7" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → UserPreference  1:1 -->
+    <mxCell id="320" value="has" style="startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="12" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Token  1:N -->
+    <mxCell id="321" value="has" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="13" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Notification  1:N -->
+    <mxCell id="322" value="receives" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="14" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Post  1:N -->
+    <mxCell id="323" value="authors" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="9" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Comment  1:N -->
+    <mxCell id="324" value="authors" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="16" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → ScrapeJob  1:N -->
+    <mxCell id="325" value="creates" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → SeriesUserRecord  1:N -->
+    <mxCell id="326" value="tracked via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="22" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → ChapterRating  1:N -->
+    <mxCell id="327" value="rates via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="23" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → ReadingProgress  1:N -->
+    <mxCell id="328" value="tracks via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → PageBookmark  1:N -->
+    <mxCell id="329" value="bookmarks via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="25" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → CreatorFollow  1:N -->
+    <mxCell id="330" value="follows via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="26" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → PostVote  1:N -->
+    <mxCell id="331" value="votes via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="27" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → FriendRequest (sends)  1:N -->
+    <mxCell id="332" value="sends" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" edge="1" source="11" target="28" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → FriendRequest (receives)  1:N -->
+    <mxCell id="333" value="receives" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.7;entryY=0;entryDx=0;entryDy=0;" edge="1" source="11" target="28" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Conversation (participant a)  1:N -->
+    <mxCell id="334" value="participant a" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" source="11" target="29" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Conversation (participant b)  1:N -->
+    <mxCell id="335" value="participant b" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;" edge="1" source="11" target="29" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → Message  1:N -->
+    <mxCell id="336" value="sends" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="11" target="15" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → AuditLog  1:N (OTEL) -->
+    <mxCell id="337" value="actor" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;dashed=1;" edge="1" source="11" target="17" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Personnel → UserLog  1:N (OTEL) -->
+    <mxCell id="338" value="logged" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;dashed=1;" edge="1" source="11" target="18" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Post → Comment  1:N -->
+    <mxCell id="339" value="receives" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="9" target="16" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Post → PostVote  1:N -->
+    <mxCell id="340" value="voted via" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="9" target="27" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Post → Post (self: repost of)  0|1:N -->
+    <mxCell id="341" value="repost of" style="startArrow=ERone;startFill=0;endArrow=ERzeroToOne;endFill=0;html=1;fontSize=10;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" source="9" target="9" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1110" y="175" />
+          <mxPoint x="1110" y="305" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <!-- Conversation → Message  1:N -->
+    <mxCell id="342" value="contains" style="startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;html=1;fontSize=10;" edge="1" source="29" target="15" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Comment → Comment (self: parent)  0|1:N -->
+    <mxCell id="343" value="parent" style="startArrow=ERone;startFill=0;endArrow=ERzeroToOne;endFill=0;html=1;fontSize=10;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" source="16" target="16" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="10" y="547" />
+          <mxPoint x="10" y="715" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <!-- ScrapeJob → Series  N:0|1 -->
+    <mxCell id="344" value="targets" style="startArrow=ERmany;startFill=0;endArrow=ERzeroToOne;endFill=0;html=1;fontSize=10;" edge="1" source="10" target="3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

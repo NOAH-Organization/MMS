@@ -1,4 +1,7 @@
-// All archived files
+# All archived files
 *.zip
 *.tar.gz
 *.rar
+
+# Claude Code — machine-local settings (permissions, local paths)
+.claude/settings.local.json

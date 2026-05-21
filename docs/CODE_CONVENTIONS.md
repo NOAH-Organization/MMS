@@ -1,47 +1,71 @@
 # NOAH Manga Management System (NOAH MMS) — Code Conventions
 
-**Last revised:** 08/05/2026 11:33 AM
+**Last revised:** 20/05/2026 11:33 AM
 
 ## General (for all programming languages)
 
 - Use 4-space indentation
-- Advoid nesting over 4 levels of indentation
-- Use the framework logging configurations; If there is none, use the custom logging styles:
-  - Annouce the current process function and file at the begining of the logging sentences, example `[startApp/index.js]`
-  - Use a separator - 60 repeats of `-` symbol - for logging at the start and the end of functions
-- Should avoid nesting function unless necessary
-- Always put the opening brace last on the line and the closing brace is empty on a line of its own unless it is followed by a continuation of the same statement
-- Function should be precise and only do one thing - try to decomposite them into smaller function if it becomes too complex
+- Avoid nesting over 4 levels of indentation; JSX component trees are exempt from this limit
+- Use the framework logging configurations; always apply the following logging conventions regardless of the logging library used:
+  - Announce the current process function and file at the beginning of each log message, followed by the timestamp in `DD-MM-YYYY HH:mm:ss` format — example: `[startApp/index.js] 20-05-2026 14:30:00`
+  - Use a separator — 60 repeats of `-` — before and after each function's log group
+- Avoid nesting functions unless necessary
+- Always put the opening brace last on the line; the closing brace is on a line of its own unless it is followed by a continuation of the same statement
+- Functions should be precise and only do one thing — decompose them into smaller functions if they become too complex
 
 ## Markdown
 
 - Always open a file with a heading 1 (`#`) as the title
-- Space to the right and left for table column style "compact"
+- Pad each table cell with a single space on each side (e.g., `| value |`, not `|value|`)
 - Place a bold **Last revised:** line immediately after the title, formatted as `DD/MM/YYYY hh:mm AM/PM`
   - Example: `**Last revised:** 25/04/2026 09:53 AM`
 
 ## TypeScript
 
+### File Naming
+
+- Use `kebab-case` for all file and folder names (e.g., `user-service.ts`, `auth-guard.ts`)
+- Use `PascalCase` for React component files, matching the component's export name (e.g., `UserCard.tsx`)
+- Use `PascalCase` for class files, matching the class name
+
+### Code Style
+
 - Use `<>` for type assertions
 - Prefer `const` over `let`; only use `let` for variables whose value is reassigned
 - Always end a statement with `;`
-- Exports:
-  - Use `export function` or `export class` when exporting a function or class directly
-  - Declare constants with `const`, then export them at the bottom of the file
-  - If a file contains only one function, class, or constant, always make it the default export
 - Wrap strings in single quotes `''`
 - Always declare types for function parameters
 - When declaring a constant with a custom type, define the interface first, then implement it in the constant
 - Always use `import` to import modules; never use `require`
-- Prefix log messages with an emoji that matches the message's intent
-- Prefer named `function` declarations over arrow functions for logic implementation
-- Use arrow functions only for: IIFEs, wrapper functions that contain no logic, and callbacks inside reducers and function return
-- When calling an async function without awaiting its result, use `void` and wrap the call in a wrapper function
 - Order import statements as follows: `import type` before value imports → default imports before named imports → fewer imports before more imports
+- Prefer named `function` declarations over arrow functions for logic implementation
+- Use arrow functions only for: IIFEs, wrapper functions that contain no logic, and callbacks inside reducers and function returns
+- When calling an async function without awaiting its result, use `void` and wrap the call in a wrapper function
 - Prefer reducer functions over manual iteration
 - Use the ternary operator for single-line conditional assignments and single-line return objects; use `if` statements for multi-line conditional logic and multi-line return objects
-- When fetching file from an URL: use Buffer for server actions, use blob for browser download
-- Document functions using the following JSDoc template:
+- When fetching a file from a URL: use `Buffer` for server actions, use `Blob` for browser download
+
+### Exports
+
+- Use `export function` or `export class` when exporting a function or class directly
+- Declare constants with `const`, then export them at the bottom of the file
+- If a file contains only one function, class, or constant, always make it the default export
+
+### Logging
+
+- Prefix log messages with an emoji that matches the message's intent:
+  - `✅` — success / completion
+  - `❌` — error / failure
+  - `⚠️` — warning / degraded state
+  - `🔄` — processing / in-progress
+  - `🚀` — startup / initialization
+  - `💾` — database / storage operations
+  - `📤` — outgoing requests / uploads
+  - `📥` — incoming data / downloads
+
+### JSDoc
+
+Document all exported functions using the following JSDoc template:
 
 ```javascript
 /**
@@ -55,7 +79,7 @@
 
 ### React
 
-- Use function component (JSX) by default instead of class component
+- Use function components (JSX) by default instead of class components
 - JSX must always return a single root element; use `<>` (fragment) or an element array to wrap multiple elements
 - Use curly braces `{}` to embed JavaScript expressions inside JSX
 - Double curly braces `{{}}` denote a JavaScript object inside JSX, commonly used for inline CSS styles
@@ -82,13 +106,12 @@
   - Never call component functions directly
   - Never pass hooks as regular values
 - Follow the Rules of Hooks strictly:
-  - Only call hooks at the top level
+  - Only call hooks at the top level — never inside conditionals, loops, or nested functions; a hook must be called every time its parent function runs, unconditionally
   - Only call hooks from React function components or custom hooks
-  - Never pass it around as a regular value
+  - Never pass a hook around as a regular value
 - Prefer expressing logic through rendering; use side effects only as a last resort
-- Instead of mutating a Hook dynamically, create a static version of the Hook with the desired functionality
-- Always inline the call of the Hook into that component and handle any logic in there instead of dynamically used it in a component
-- Prefer defining a function for event handlers over inline attribute arrow function
+- Function components may contain at most one level of inner function nesting — do not define functions inside functions within a component body
+- Prefer defining a named function for event handlers over inline arrow functions in JSX attributes
 - Prefer custom React components over raw HTML tags
 - Use semantically meaningful HTML tags (e.g., `<section>` for page sections, `<article>` for self-contained content)
 
@@ -96,13 +119,13 @@
 
 - Use the App Router by default
 - Enable React Strict Mode by default
-- Keep client components as deep in import tree as possible. NOTE: a server component can still be a child of a client server - however, avoid import the server component inside client one, instead nest JSX components directly from parent component
-- Always use `<form>` tag for getting data from client to write into backend. Use server action only for client components in client->server data direction.
-- Only use client for user activity and interactivity
+- Keep client components as deep in the import tree as possible — a server component can still be a child of a client component; however, avoid importing a server component inside a client component; instead, nest JSX components directly from the parent
+- Always use `<form>` and Server Actions to send data from client to backend; only invoke Server Actions from client components
+- Only use client components for user activity and interactivity
 - Follow Next.js folder/file naming conventions
-- Keep project files outside the app directotry, only keep routing files (page, layout, loading, not-found, ...) inside it (purely for routing purposes).
-- Prefer Next.js `<Link>` component instead of HTML default `<a>`
-- Cookies should be set on the server to prevent client-side tampering, using Next.js `cookies` API
+- Keep project files outside the `app` directory; only keep routing files (`page`, `layout`, `loading`, `not-found`, etc.) inside it — purely for routing purposes
+- Prefer the Next.js `<Link>` component instead of the HTML `<a>` tag
+- Cookies should be set on the server to prevent client-side tampering, using the Next.js `cookies` API
 
 ### NestJS
 

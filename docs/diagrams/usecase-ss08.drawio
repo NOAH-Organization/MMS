@@ -1,0 +1,33 @@
+<mxfile host="Claude Code" modified="2026-05-22" agent="Claude Sonnet 4.6" version="21.0.0">
+  <diagram id="ss08-usecase" name="SS-08: Admin AI Agent">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="SS-08: Admin — AI Agent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#444444;strokeWidth=2;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="650" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_a" value="Administrator" style="shape=mxgraph.uml.actor2;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="165" width="70" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0801" value="&lt;b&gt;UC-08-01&lt;/b&gt;&lt;br/&gt;Request AI summary / metadata suggestions" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="100" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0802" value="&lt;b&gt;UC-08-02&lt;/b&gt;&lt;br/&gt;Review and apply AI-generated tags" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="240" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0803" value="&lt;b&gt;UC-08-03&lt;/b&gt;&lt;br/&gt;Request AI activity summary for personnel" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="100" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0804" value="&lt;b&gt;UC-08-04&lt;/b&gt;&lt;br/&gt;Review AI-flagged accounts" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="240" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e01" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0801" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e02" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0802" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e03" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0803" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e04" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0804" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext01" value="«extend»" style="dashed=1;endArrow=open;endFill=0;html=1;fontSize=10;" edge="1" source="uc0802" target="uc0801" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

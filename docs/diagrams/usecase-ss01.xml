@@ -1,0 +1,60 @@
+<mxfile host="Claude Code" modified="2026-05-22" agent="Claude Sonnet 4.6" version="21.0.0">
+  <diagram id="ss01-usecase" name="SS-01: Manga Reading and Delivery">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="SS-01: Manga Reading &amp; Delivery" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#444444;strokeWidth=2;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="940" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_p" value="Personnel" style="shape=mxgraph.uml.actor2;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="240" width="70" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0101" value="&lt;b&gt;UC-01-01&lt;/b&gt;&lt;br/&gt;Read a manga chapter" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="90" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0102" value="&lt;b&gt;UC-01-02&lt;/b&gt;&lt;br/&gt;Navigate chapters" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="190" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0103" value="&lt;b&gt;UC-01-03&lt;/b&gt;&lt;br/&gt;View manga detail page" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="290" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0104" value="&lt;b&gt;UC-01-04&lt;/b&gt;&lt;br/&gt;View character profiles" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="390" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0105" value="&lt;b&gt;UC-01-05&lt;/b&gt;&lt;br/&gt;View all volumes in a series" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="90" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0106" value="&lt;b&gt;UC-01-06&lt;/b&gt;&lt;br/&gt;Track &amp; resume reading progress" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="190" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0107" value="&lt;b&gt;UC-01-07&lt;/b&gt;&lt;br/&gt;Configure reading direction" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="290" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0108" value="&lt;b&gt;UC-01-08&lt;/b&gt;&lt;br/&gt;Switch page display mode" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="390" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0109" value="&lt;b&gt;UC-01-09&lt;/b&gt;&lt;br/&gt;Change page fit option" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="90" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0110" value="&lt;b&gt;UC-01-10&lt;/b&gt;&lt;br/&gt;Place or clear a bookmark" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="190" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0112" value="&lt;b&gt;UC-01-12&lt;/b&gt;&lt;br/&gt;Rate a manga title" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="290" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e01" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0101" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e02" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0102" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e03" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0103" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e04" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0104" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e05" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0105" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e06" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0106" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e07" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0107" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e08" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0108" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e09" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0109" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0110" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="" style="endArrow=none;html=1;" edge="1" source="actor_p" target="uc0112" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

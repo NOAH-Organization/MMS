@@ -1,0 +1,53 @@
+<mxfile host="Claude Code" modified="2026-05-22" agent="Claude Sonnet 4.6" version="21.0.0">
+  <diagram id="ss07-usecase" name="SS-07: Admin Personnel Management">
+    <mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" value="SS-07: Admin — Personnel Management" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#444444;strokeWidth=2;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="940" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_a" value="Administrator" style="shape=mxgraph.uml.actor2;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="205" width="70" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0701" value="&lt;b&gt;UC-07-01&lt;/b&gt;&lt;br/&gt;Search for a personnel account" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="100" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0702" value="&lt;b&gt;UC-07-02&lt;/b&gt;&lt;br/&gt;View account details" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="220" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0703" value="&lt;b&gt;UC-07-03&lt;/b&gt;&lt;br/&gt;Force password reset" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="340" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0704" value="&lt;b&gt;UC-07-04&lt;/b&gt;&lt;br/&gt;Create a new account" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="100" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0705" value="&lt;b&gt;UC-07-05&lt;/b&gt;&lt;br/&gt;Assign or change a role" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="220" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0706" value="&lt;b&gt;UC-07-06&lt;/b&gt;&lt;br/&gt;Suspend or reinstate account" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="340" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0707" value="&lt;b&gt;UC-07-07&lt;/b&gt;&lt;br/&gt;Delete account permanently" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="100" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0708" value="&lt;b&gt;UC-07-08&lt;/b&gt;&lt;br/&gt;View system-wide statistics" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="220" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc0709" value="&lt;b&gt;UC-07-09&lt;/b&gt;&lt;br/&gt;View per-personnel activity" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="340" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e01" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0701" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e02" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0702" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e03" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0703" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e04" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0704" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e05" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0705" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e06" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0706" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e07" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0707" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e08" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0708" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e09" value="" style="endArrow=none;html=1;" edge="1" source="actor_a" target="uc0709" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="inc01" value="«include»" style="dashed=1;endArrow=open;endFill=0;html=1;fontSize=10;" edge="1" source="uc0702" target="uc0701" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,6 +1,6 @@
 # NOAH Manga Management System (NOAH MMS) — UI/UX Design Guideline
 
-> **For Claude Code agents:** This file is the authoritative design reference. All UI implementation must use the Tailwind utility classes and config tokens defined here. Do not deviate from color, typography, or spacing tokens without explicit instruction. The canonical Tailwind configuration is in **Section 13**.
+> **For Claude Code agents:** This file is the authoritative design reference. All UI implementation must use the Tailwind utility classes and config tokens defined here. Do not deviate from color, typography, or spacing tokens without explicit instruction. The canonical Tailwind configuration is in **Section 14**.
 
 ---
 
@@ -286,9 +286,95 @@ Use `grid` with responsive `grid-cols-*`:
 
 ---
 
-## 8. Component Library
+## 8. Component Library Foundation
 
-### 8.1 Buttons
+All UI components **must start from [shadcn/ui](https://ui.shadcn.com/)** unless the component is not available in the library. shadcn/ui provides accessible, Tailwind-native components built on [Radix UI](https://www.radix-ui.com/) primitives. Components are copied into `src/components/ui/` via the CLI — you own the source code and can freely customize per NOAH MMS tokens.
+
+```bash
+npx shadcn@latest add <component-name>
+```
+
+### 8.1 Complementary Libraries
+
+| Library | Purpose |
+| --- | --- |
+| `lucide-react` | All iconography — see Section 10; shadcn/ui uses Lucide natively |
+| `sonner` | Toast/notification system — wrapped by shadcn/ui `Sonner` component |
+| `react-hook-form` + `zod` | Form state management and schema validation |
+| `@tanstack/react-table` | Admin data tables — used in shadcn/ui DataTable pattern |
+| `@tanstack/react-virtual` | Manga grid virtualization for long-scroll performance |
+
+### 8.2 NOAH MMS Token → shadcn/ui CSS Variable Mapping
+
+shadcn/ui components are styled via CSS custom properties. Set these in `globals.css` to apply NOAH MMS brand tokens. Values are **space-separated RGB channels** (not hex) — this enables Tailwind's opacity modifier syntax (`bg-primary/20`).
+
+```css
+:root,
+.dark {
+  --background:             13 13 13;    /* surface-base      #0D0D0D */
+  --foreground:             242 242 242; /* content-primary   #F2F2F2 */
+  --card:                   22 22 22;    /* surface           #161616 */
+  --card-foreground:        242 242 242;
+  --popover:                34 34 34;    /* surface-elevated  #222222 */
+  --popover-foreground:     242 242 242;
+  --primary:                212 43 43;   /* brand-red         #D42B2B */
+  --primary-foreground:     13 13 13;    /* content-inverse   #0D0D0D */
+  --secondary:              44 44 44;    /* surface-overlay   #2C2C2C */
+  --secondary-foreground:   242 242 242;
+  --muted:                  26 26 26;    /* surface-subtle    #1A1A1A */
+  --muted-foreground:       163 163 163; /* content-secondary #A3A3A3 */
+  --accent:                 61 16 16;    /* brand-red-muted   #3D1010 */
+  --accent-foreground:      212 43 43;   /* brand-red */
+  --destructive:            239 68 68;   /* error             #EF4444 */
+  --destructive-foreground: 242 242 242;
+  --border:                 51 51 51;    /* stroke            #333333 */
+  --input:                  44 44 44;    /* surface-overlay   #2C2C2C */
+  --ring:                   212 43 43;   /* stroke-brand      #D42B2B */
+  --radius:                 0.5rem;      /* radius-md = 8px  */
+}
+```
+
+### 8.3 Component Sourcing Rules
+
+Use this table to decide whether to source from shadcn/ui or build a custom component.
+
+| Component | Source | Notes |
+| --- | --- | --- |
+| Button | shadcn/ui `Button` | Override variant styles with NOAH MMS tokens |
+| Input / Textarea | shadcn/ui `Input` / `Textarea` | Focus ring driven by `--ring` (brand-red) |
+| Select / Combobox | shadcn/ui `Select` / `Command` | |
+| Dialog / Modal | shadcn/ui `Dialog` | See visual spec in Section 9.7 |
+| Dropdown Menu | shadcn/ui `DropdownMenu` | |
+| Context Menu | shadcn/ui `ContextMenu` | |
+| Tooltip | shadcn/ui `Tooltip` | |
+| Tabs | shadcn/ui `Tabs` | |
+| Accordion | shadcn/ui `Accordion` | |
+| Form + Validation | shadcn/ui `Form` + `react-hook-form` + `zod` | |
+| Data Table (admin) | shadcn/ui DataTable + `@tanstack/react-table` | See visual spec in Section 9.8 |
+| Toast / Notification | shadcn/ui `Sonner` | Auto-dismiss 5s; errors persistent — Section 9.9 |
+| Badge / Status chip | shadcn/ui `Badge` | Override colors per semantic tokens |
+| Avatar | shadcn/ui `Avatar` | |
+| Separator | shadcn/ui `Separator` | |
+| Sheet / Drawer | shadcn/ui `Sheet` | Mobile sidebar drawer |
+| Skeleton | shadcn/ui `Skeleton` | All loading states |
+| Calendar / Date Picker | shadcn/ui `Calendar` | |
+| Pagination | shadcn/ui `Pagination` | |
+| Progress | shadcn/ui `Progress` | |
+| Slider | shadcn/ui `Slider` | Reading progress, volume controls |
+| Switch | shadcn/ui `Switch` | Settings toggles |
+| **Manga Card** | **Custom** | `aspect-[2/3]` cover + overlay — Section 9.3 |
+| **Manga Grid** | **Custom** | Responsive `grid-cols-2..7` — Section 7.5 |
+| **Sidebar Navigation** | **Custom** | 280px/64px collapsible — Section 9.5 |
+| **Tags / Genre Chips** | **Custom** | Pill with active red tint — Section 9.4 |
+| **Top Bar** | **Custom** | Logo + search + avatar — Section 9.6 |
+| **Reading View chrome** | **Custom** | Auto-hide control bars — Section 11 |
+| **AI Chat Panel** | **Custom** | Streaming message UI (SS-05) |
+
+---
+
+## 9. Custom Component Specs
+
+### 9.1 Buttons
 
 #### Variants
 
@@ -316,7 +402,7 @@ disabled:opacity-40 disabled:cursor-not-allowed
 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red
 ```
 
-### 8.2 Inputs & Form Fields
+### 9.2 Inputs & Form Fields
 
 **Base classes:**
 
@@ -337,7 +423,7 @@ Labels: `font-sans font-medium text-label-lg text-content-primary mb-1 block`
 
 Error messages: `font-sans text-body-sm text-error mt-1`
 
-### 8.3 Manga Cards
+### 9.3 Manga Cards
 
 **Container:**
 
@@ -372,7 +458,7 @@ hover:-translate-y-0.5 hover:shadow-md hover:border-stroke-strong
 
 Badge shared classes: `font-sans font-medium text-label-sm rounded px-1.5 py-0.5`
 
-### 8.4 Tags / Genre Chips
+### 9.4 Tags / Genre Chips
 
 **Default:**
 
@@ -386,7 +472,7 @@ transition-colors duration-150
 
 **Active/selected:** `bg-brand-red-muted text-brand-red border-brand-red`
 
-### 8.5 Navigation (Sidebar)
+### 9.5 Navigation (Sidebar)
 
 **Container:**
 
@@ -411,7 +497,7 @@ transition-colors duration-150 cursor-pointer
 
 Icon size: `w-5 h-5` (20px)
 
-### 8.6 Top Bar
+### 9.6 Top Bar
 
 ```CSS
 h-topbar bg-surface border-b border-stroke-subtle
@@ -422,7 +508,7 @@ On mobile: `h-topbar-mobile px-4`
 
 Content order (left → right): Logo · `[flex-1 search bar]` · `[notifications, user menu]`
 
-### 8.7 Modals & Dialogs
+### 9.7 Modals & Dialogs
 
 **Overlay:** `fixed inset-0 bg-black/75 z-[200] flex items-center justify-center p-4`
 
@@ -439,7 +525,7 @@ max-w-4xl  (960px — large)
 - Header: `font-sans font-semibold text-heading-md text-content-primary mb-4`
 - Footer actions: `flex justify-end gap-3 mt-6`
 
-### 8.8 Tables (Admin)
+### 9.8 Tables (Admin)
 
 **Container:** `bg-surface border border-stroke-subtle rounded-xl overflow-hidden`
 
@@ -451,7 +537,7 @@ max-w-4xl  (960px — large)
 
 Numeric/ID columns: `font-mono text-mono`
 
-### 8.9 Notifications & Toasts
+### 9.9 Notifications & Toasts
 
 **Position:** `fixed top-4 right-4 z-[300] flex flex-col gap-2`
 
@@ -473,7 +559,7 @@ Auto-dismiss: **5 seconds**. Errors: **persistent** until dismissed manually.
 
 ---
 
-## 9. Iconography
+## 10. Iconography
 
 - **Icon library:** [Lucide Icons](https://lucide.dev/) — consistent stroke-based icons.
 - **Default stroke width:** `1.5px` (Lucide default).
@@ -483,7 +569,7 @@ Auto-dismiss: **5 seconds**. Errors: **persistent** until dismissed manually.
 
 ---
 
-## 10. Reading View
+## 11. Reading View
 
 The manga reading experience is a first-class context with its own layout rules.
 
@@ -496,7 +582,7 @@ The manga reading experience is a first-class context with its own layout rules.
 
 ---
 
-## 11. Interaction & Motion
+## 12. Interaction & Motion
 
 | Property | Tailwind Class / Value |
 | --- | --- |
@@ -512,7 +598,7 @@ The manga reading experience is a first-class context with its own layout rules.
 
 ---
 
-## 12. Accessibility
+## 13. Accessibility
 
 - Minimum contrast ratios: **4.5:1** for body text, **3:1** for large text and UI components.
 - All interactive elements must have a visible focus ring: `focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red`
@@ -523,14 +609,16 @@ The manga reading experience is a first-class context with its own layout rules.
 
 ---
 
-## 13. Tailwind Configuration Reference
+## 14. Tailwind Configuration Reference
 
 The complete `tailwind.config.ts` for this project. All tokens above derive from this file.
 
 ```ts
 import type { Config } from 'tailwindcss'
+import animate from 'tailwindcss-animate'
 
 const config: Config = {
+  darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx,js,jsx}'],
   theme: {
     screens: {
@@ -646,7 +734,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 }
 
 export default config

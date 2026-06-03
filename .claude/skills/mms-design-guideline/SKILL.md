@@ -7,7 +7,7 @@ metadata:
 
 # NOAH MMS — UI/UX Design Guideline
 
-All UI implementation must follow this guide exactly. Use the Tailwind utility classes and config tokens defined here. The authoritative Tailwind configuration is in **Section 13** of [docs/DESIGN_GUIDELINE.md](../../../docs/DESIGN_GUIDELINE.md).
+All UI implementation must follow this guide exactly. Use the Tailwind utility classes and config tokens defined here. The authoritative Tailwind configuration is in **Section 14** of [docs/DESIGN_GUIDELINE.md](../../../docs/DESIGN_GUIDELINE.md).
 
 ---
 
@@ -207,9 +207,93 @@ Base unit: **4px**. All spacing tokens map directly to Tailwind's built-in scale
 
 ---
 
-## 8. Component Patterns
+## 8. Component Library Foundation
 
-### Buttons
+All UI components **must start from [shadcn/ui](https://ui.shadcn.com/)** unless the component is not available in the library. shadcn/ui provides accessible, Tailwind-native components built on [Radix UI](https://www.radix-ui.com/) primitives. Components are copied into `src/components/ui/` via the CLI — you own the source and can freely customize per NOAH MMS tokens.
+
+```bash
+npx shadcn@latest add <component-name>
+```
+
+### Complementary Libraries
+
+| Library | Purpose |
+| --- | --- |
+| `lucide-react` | All iconography — Section 9; shadcn/ui uses Lucide natively |
+| `sonner` | Toast/notification system — wrapped by shadcn/ui `Sonner` component |
+| `react-hook-form` + `zod` | Form state management and schema validation |
+| `@tanstack/react-table` | Admin data tables — used in shadcn/ui DataTable pattern |
+| `@tanstack/react-virtual` | Manga grid virtualization for long-scroll performance |
+
+### NOAH MMS Token → shadcn/ui CSS Variable Mapping
+
+Set these in `globals.css`. Values are **space-separated RGB channels** (not hex) — this enables Tailwind's opacity modifier syntax (`bg-primary/20`).
+
+```css
+:root,
+.dark {
+  --background:             13 13 13;    /* surface-base      #0D0D0D */
+  --foreground:             242 242 242; /* content-primary   #F2F2F2 */
+  --card:                   22 22 22;    /* surface           #161616 */
+  --card-foreground:        242 242 242;
+  --popover:                34 34 34;    /* surface-elevated  #222222 */
+  --popover-foreground:     242 242 242;
+  --primary:                212 43 43;   /* brand-red         #D42B2B */
+  --primary-foreground:     13 13 13;    /* content-inverse   #0D0D0D */
+  --secondary:              44 44 44;    /* surface-overlay   #2C2C2C */
+  --secondary-foreground:   242 242 242;
+  --muted:                  26 26 26;    /* surface-subtle    #1A1A1A */
+  --muted-foreground:       163 163 163; /* content-secondary #A3A3A3 */
+  --accent:                 61 16 16;    /* brand-red-muted   #3D1010 */
+  --accent-foreground:      212 43 43;   /* brand-red */
+  --destructive:            239 68 68;   /* error             #EF4444 */
+  --destructive-foreground: 242 242 242;
+  --border:                 51 51 51;    /* stroke            #333333 */
+  --input:                  44 44 44;    /* surface-overlay   #2C2C2C */
+  --ring:                   212 43 43;   /* stroke-brand      #D42B2B */
+  --radius:                 0.5rem;      /* radius-md = 8px  */
+}
+```
+
+### Component Sourcing Rules
+
+| Component | Source | Notes |
+| --- | --- | --- |
+| Button | shadcn/ui `Button` | Override variant styles with NOAH MMS tokens |
+| Input / Textarea | shadcn/ui `Input` / `Textarea` | Focus ring driven by `--ring` (brand-red) |
+| Select / Combobox | shadcn/ui `Select` / `Command` | |
+| Dialog / Modal | shadcn/ui `Dialog` | See visual spec in Section 9.7 |
+| Dropdown Menu | shadcn/ui `DropdownMenu` | |
+| Context Menu | shadcn/ui `ContextMenu` | |
+| Tooltip | shadcn/ui `Tooltip` | |
+| Tabs | shadcn/ui `Tabs` | |
+| Accordion | shadcn/ui `Accordion` | |
+| Form + Validation | shadcn/ui `Form` + `react-hook-form` + `zod` | |
+| Data Table (admin) | shadcn/ui DataTable + `@tanstack/react-table` | See Section 9.8 |
+| Toast / Notification | shadcn/ui `Sonner` | Auto-dismiss 5s; errors persistent — Section 9.9 |
+| Badge / Status chip | shadcn/ui `Badge` | Override colors per semantic tokens |
+| Avatar | shadcn/ui `Avatar` | |
+| Separator | shadcn/ui `Separator` | |
+| Sheet / Drawer | shadcn/ui `Sheet` | Mobile sidebar drawer |
+| Skeleton | shadcn/ui `Skeleton` | All loading states |
+| Calendar / Date Picker | shadcn/ui `Calendar` | |
+| Pagination | shadcn/ui `Pagination` | |
+| Progress | shadcn/ui `Progress` | |
+| Slider | shadcn/ui `Slider` | Reading progress, volume controls |
+| Switch | shadcn/ui `Switch` | Settings toggles |
+| **Manga Card** | **Custom** | `aspect-[2/3]` cover + overlay — Section 9.3 |
+| **Manga Grid** | **Custom** | Responsive `grid-cols-2..7` — Section 7 |
+| **Sidebar Navigation** | **Custom** | 280px/64px collapsible — Section 9.5 |
+| **Tags / Genre Chips** | **Custom** | Pill with active red tint — Section 9.4 |
+| **Top Bar** | **Custom** | Logo + search + avatar — Section 9.6 |
+| **Reading View chrome** | **Custom** | Auto-hide control bars — Section 11 |
+| **AI Chat Panel** | **Custom** | Streaming message UI (SS-05) |
+
+---
+
+## 9. Custom Component Specs
+
+### 9.1 Buttons
 
 Shared classes for **all** buttons:
 
@@ -233,7 +317,7 @@ focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 foc
 | `md` | 40px | `h-10 px-4 text-label-lg` |
 | `lg` | 48px | `h-12 px-6 text-label-lg` |
 
-### Inputs & Form Fields
+### 9.2 Inputs & Form Fields
 
 Base classes:
 
@@ -253,7 +337,7 @@ Labels: `font-sans font-medium text-label-lg text-content-primary mb-1 block`
 
 Error messages: `font-sans text-body-sm text-error mt-1`
 
-### Manga Cards
+### 9.3 Manga Cards
 
 ```
 bg-surface rounded-lg border border-stroke-subtle overflow-hidden
@@ -266,7 +350,7 @@ Structure: `aspect-[2/3]` cover image → `p-3` info area with title (`font-sans
 Status badges (`absolute top-2 left-2`, shared: `font-sans font-medium text-label-sm rounded px-1.5 py-0.5`):
 - Ongoing: `bg-info text-white` · Completed: `bg-success text-white` · Hiatus: `bg-warning text-white` · Cancelled: `bg-error text-white`
 
-### Tags / Genre Chips
+### 9.4 Tags / Genre Chips
 
 ```
 bg-surface-elevated border border-stroke-subtle rounded-full px-2.5 py-1
@@ -277,7 +361,7 @@ hover:bg-surface-overlay hover:text-content-primary hover:border-stroke
 
 Active/selected: `bg-brand-red-muted text-brand-red border-brand-red`
 
-### Navigation (Sidebar)
+### 9.5 Navigation (Sidebar)
 
 Nav item base:
 
@@ -292,7 +376,17 @@ Active state: `bg-brand-red-muted text-brand-red font-medium border-l-[3px] bord
 
 Icon size: `w-5 h-5` (20px)
 
-### Modals & Dialogs
+### 9.6 Top Bar
+
+```
+h-topbar bg-surface border-b border-stroke-subtle sticky top-0 z-[100]
+```
+
+On mobile: `h-topbar-mobile px-4`
+
+Content order (left → right): Logo · `[flex-1 search bar]` · `[notifications, user menu]`
+
+### 9.7 Modals & Dialogs
 
 Overlay: `fixed inset-0 bg-black/75 z-[200] flex items-center justify-center p-4`
 
@@ -308,7 +402,7 @@ Sizes: `max-w-sm` (560px small) · `max-w-2xl` (720px medium) · `max-w-4xl` (96
 - Header: `font-sans font-semibold text-heading-md text-content-primary mb-4`
 - Footer: `flex justify-end gap-3 mt-6`
 
-### Admin Tables
+### 9.8 Admin Tables
 
 Container: `bg-surface border border-stroke-subtle rounded-xl overflow-hidden`
 
@@ -318,7 +412,7 @@ Data rows: `h-[52px] border-b border-stroke-subtle font-sans text-body-md text-c
 
 Numeric/ID columns: `font-mono text-mono`
 
-### Notifications & Toasts
+### 9.9 Notifications & Toasts
 
 Position: `fixed top-4 right-4 z-[300] flex flex-col gap-2`
 
@@ -330,7 +424,7 @@ Left border by type: `border-l-success` · `border-l-warning` · `border-l-error
 
 ---
 
-## 9. Iconography
+## 10. Iconography
 
 - **Library:** Lucide Icons — consistent stroke-based icons.
 - **Default stroke width:** `1.5px`.
@@ -340,7 +434,7 @@ Left border by type: `border-l-success` · `border-l-warning` · `border-l-error
 
 ---
 
-## 10. Reading View
+## 11. Reading View
 
 - **Background:** `bg-black` (`#000000`) — maximizes contrast for manga pages.
 - **UI chrome:** Minimal. Control bars: `opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300`; auto-hide after 3 seconds of inactivity.
@@ -349,7 +443,7 @@ Left border by type: `border-l-success` · `border-l-warning` · `border-l-error
 
 ---
 
-## 11. Interaction & Motion
+## 12. Interaction & Motion
 
 | Property | Value |
 | --- | --- |
@@ -364,7 +458,7 @@ Always add `motion-reduce:transition-none motion-reduce:transform-none` to all a
 
 ---
 
-## 12. Accessibility
+## 13. Accessibility
 
 - Minimum contrast: **4.5:1** for body text, **3:1** for large text and UI components.
 - All interactive elements must have a visible focus ring: `focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red`

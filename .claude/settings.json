@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "mcp__claude_ai_Draw_io__create_diagram"
+      "mcp__claude_ai_Draw_io__create_diagram",
+      "Edit(/.claude/skills/**)",
+      "Edit(/.claude/agents/**)"
     ]
   }
 }
